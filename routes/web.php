@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\productC0ntroller;
 use App\Http\Controllers\Backend\TempImageController;
 use App\Http\Controllers\Backend\SubcategorieController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Frontend\ShopController;
 use Mockery\Matcher\Subset;
@@ -19,6 +20,10 @@ use Mockery\Matcher\Subset;
 Route::get('/',[HomePageController::class,'index'])->name('front.homepage');
 Route::get('/shop/{categoryslug?}/{subcategorieslug?}',[ShopController::class,'index'])->name('front.shopPage');
 Route::get('/product/{slug}',[ShopController::class,'product'])->name('front.product');
+Route::get('/cart',[CartController::class,'cart'])->name('front.cart');
+Route::post('/addto-cart',[CartController::class,'addtoCart'])->name('front.addtoCart');
+Route::post('/update-cart',[CartController::class,'updateCart'])->name('front.updateCart');
+Route::delete('/delete-cart',[CartController::class,'delete'])->name('front.deleteCart');
 
 
 

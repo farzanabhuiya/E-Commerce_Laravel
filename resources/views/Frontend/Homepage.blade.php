@@ -114,7 +114,7 @@
                     <div class="cat-card">
                         <div class="left">
                             {{-- <img src="{{asset('frontend/images/cat-1.jpg')}}" alt="" class="img-fluid"> --}}
-                            <img  class="card-img-top" src="{{asset('storage/category/'.$category->image)}} alt=" class="img-fluid">
+                            <img  class="card-img-top" src="{{asset('storage/category/'.$category->image)}}" alt="" class="img-fluid">
                             
                         </div>
                         <div class="right">
@@ -150,7 +150,7 @@
                             <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
 
                             <div class="product-action">
-                                <a class="btn btn-dark" href="#">
+                                <a class="btn btn-dark" href="javascript:void(0)" onclick="addtoCart({{ $product->id}})" >
                                     <i class="fa fa-shopping-cart"></i> Add To Cart
                                 </a>                            
                             </div>
@@ -198,7 +198,7 @@
                             <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
 
                             <div class="product-action">
-                                <a class="btn btn-dark" href="#">
+                                <a class="btn btn-dark" href="javascript: void(0)" onclick="addtoCart({{$product->id}})" >
                                     <i class="fa fa-shopping-cart"></i> Add To Cart
                                 </a>                            
                             </div>
@@ -225,7 +225,40 @@
     </section>
 
 
-@endsection
+
+
+    <script src="{{asset('frontend/js/jquery-3.6.0.min.js')}}"></script>
+
+       @push('customJs')       
+
+       <script type="text/javascript">
+        function addtoCart(id){
+            
+            $.ajax({
+                url:'{{route("front.addtoCart")}}',
+                type:'POST',
+                data: {id:id},
+                dataType:'json',
+                success:function(response){
+                 if(response.status==true){
+                    alert(response.message);
+                    window.location.href="{{route('front.cart')}}";
+                 }else{
+                     
+                    alert(response.message);
+                 }
+                }
+            });
+
+        }      
+</script>
+       @endpush
+       @endsection
+
+
+
+
+
 
 
 

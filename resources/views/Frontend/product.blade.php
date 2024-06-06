@@ -21,13 +21,13 @@
                 <div class="col-md-5">
                     <div id="product-carousel" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner bg-light">
-                            {{-- @foreach ($product as $key=>$product) --}}
-                                
+                            {{-- @foreach ($product as $key=>$product) --}}     
                             {{-- <div class="carousel-item {{ ($key == 0) ? 'active' : ""}}"> --}}
-                            <div class="carousel-item ">
-                             
-                                <img class="w-100 h-100" src="{{asset('storage/product/'.$product->image)}}" alt="Image">
-                            </div>
+                            {{-- <div class="carousel-item "> --}}
+                                 <img class="w-100 h-100" src="{{asset('storage/Product/'.$product->image)}}" alt="Image">
+                            {{-- </div> --}}
+
+         
                             {{-- @endforeach --}}
                            
                         </div>
@@ -56,7 +56,7 @@
                         <h2 class="price ">${{$product->price}}</h2>
 
                         {!!$product->short_description!!}
-                        <a href="cart.php" class="btn btn-dark"><i class="fas fa-shopping-cart"></i> &nbsp;ADD TO CART</a>
+                        <a href="javascript:void(0)" onclick="addtoCart({{ $product->id}})" class="btn btn-dark"><i class="fas fa-shopping-cart"></i> &nbsp;ADD TO CART</a>
                     </div>
                 </div>
 
@@ -104,11 +104,11 @@
                     
                     <div class="card product-card">
                         <div class="product-image position-relative">
-                            <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
+                            <a href="" class="product-img"><img class="card-img-top" src="{{asset('storage/product/'.$relatedproduct->image)}}" alt=""></a>
                             <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
 
                             <div class="product-action">
-                                <a class="btn btn-dark" href="#">
+                                <a class="btn btn-dark" href="javascript:void(0);" onclick="addtoCart({{ $product->id}})" >
                                     <i class="fa fa-shopping-cart"></i> Add To Cart
                                 </a>                            
                             </div>
@@ -148,6 +148,30 @@
         </div>
     </section>
      @endif
+
+
+{{-- 
+          @push('customJs')
+          <script type="text/javascript">
+            function addtoCart(id){
+                $.ajax({
+                    url:'{{route("front.addtoCart")}}',
+                    type:'post',
+                    data: {id:id},
+                    dataType:'json',
+                    success:function(response){
+                     if(response.status == true){
+                        windown.location.href="{{route('front.cart')}}";
+                     }else{
+                         
+                        alert(response.message);
+                     }
+                    }
+                });
+            }
+          </script>
+              
+          @endpush --}}
 
 
 @endsection

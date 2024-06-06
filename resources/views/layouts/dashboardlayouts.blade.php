@@ -18,6 +18,7 @@
 		<link rel="stylesheet" href="{{asset('admin/plugins/summernote/summernote.min.css')}}">
   <!---dropzone--->
 		<link rel="stylesheet" href="{{asset('admin/plugins/dropzone/min/dropzone.min.css')}}">
+		{{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 	</head>
 	<body class="hold-transition sidebar-mini">
@@ -213,6 +214,14 @@
   });
  
 	});
+
+
+
+	$.ajaxSetup({
+	          headers:{
+				'X-CSRF-TOKEN':$(meta[name="csrf-token"]).attr('content')
+			  }
+});
 </script>
 
 

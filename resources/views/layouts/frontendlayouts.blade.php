@@ -36,7 +36,8 @@
 	<link rel="stylesheet" type="text/css" href="{{asset('frontend/css/video-js.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/css/style.css')}}" />
 	<link rel="stylesheet" type="text/css" href="{{asset('frontend/css/ion.rangeSlider.min.css')}}" />
-
+     {{-- <meta name="csrf-token" frontend="{{csrf_token()}}"> --}}
+	 <meta name="csrf-token" content="{{ csrf_token() }}">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -140,7 +141,7 @@
       			</ul>      			
       		</div>   
 			<div class="right-nav py-0">
-				<a href="cart.php" class="ml-3 d-flex pt-2">
+				<a href="{{route('front.cart')}}" class="ml-3 d-flex pt-2">
 					<i class="fas fa-shopping-cart text-primary"></i>					
 				</a>
 			</div> 		
@@ -227,6 +228,37 @@ function myFunction() {
   }
 }
 </script>
+
+<script>
+	  $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+</script>
+
+
+{{-- <script>
+	function addtoCart(id){
+		
+		$.ajax({
+			url:'{{route("front.addtoCart")}}',
+			type:'POST',
+			data: {id:id},
+			dataType:'json',
+			success:function(response){
+			 if(response.status==true){
+				alert(response.message);
+				window.location.href="{{route('front.cart')}}";
+			 }else{
+				 
+				alert(response.message);
+			 }
+			}
+		});
+
+	}      
+</script> --}}
 {{-- @yield('customJs') --}}
 </body>
 </html>

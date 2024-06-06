@@ -96,6 +96,7 @@ class ShopController extends Controller
    public function product($slug){
       $categorie= Category::orderBy('name','ASC')->with('Subcategorie')->get();
     $product = product::where('slug',$slug)->first();
+   
 
     $relatedproducts=[];
     if($product->related_products != ''){
