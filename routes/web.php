@@ -23,7 +23,10 @@ Route::get('/product/{slug}',[ShopController::class,'product'])->name('front.pro
 Route::get('/cart',[CartController::class,'cart'])->name('front.cart');
 Route::post('/addto-cart',[CartController::class,'addtoCart'])->name('front.addtoCart');
 Route::post('/update-cart',[CartController::class,'updateCart'])->name('front.updateCart');
-Route::delete('/delete-cart',[CartController::class,'delete'])->name('front.deleteCart');
+Route::delete('/deletecart/{rowId}',[CartController::class,'delete'])->name('front.deleteCart');
+Route::get('/checkout',[CartController::class,'checkout'])->name('front.checkout');
+Route::post('/processCheckout',[CartController::class,'processCheckout'])->name('front.processCheckout');
+Route::get('/thanks',[CartController::class,'thanks'])->name('front.thanks');
 
 
 

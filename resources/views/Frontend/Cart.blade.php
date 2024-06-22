@@ -56,38 +56,39 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach ($cartContents as $cartContent)
+                        @foreach ($cartContents as $item)
                             
                       
                             <tr>
                                 <td>
                                     <div class="d-flex align-items-center justify-content-center">
-                                        <img src="{{asset('storage/product/'.$cartContent->image)}}" >
-                                        <h2>{{$cartContent->name}}</h2>
+                                        <img src="{{asset('storage/product/'.$item->image)}}" >
+                                        <h2>{{$item->name}}</h2>
                                     </div>
                                 </td>
-                                <td>${{$cartContent->price}}</td>
+                                <td>${{$item->price}}</td>
                                 <td>
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-dark btn-minus p-2 pt-1 pb-1 sub" data-id="{{$cartContent->rowId}}">
+                                            <button class="btn btn-sm btn-dark btn-minus p-2 pt-1 pb-1 sub" data-id="{{$item->rowId}}">
                                                 <i class="fa fa-minus"></i>
                                             </button>
                                         </div>
-                                        <input type="text" class="form-control form-control-sm  border-0 text-center" value="{{$cartContent->qty}}">
+                                        <input type="text" class="form-control form-control-sm  border-0 text-center" value="{{$item->qty}}">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-dark btn-plus p-2 pt-1 pb-1 add" data-id="{{$cartContent->rowId}}">
+                                            <button class="btn btn-sm btn-dark btn-plus p-2 pt-1 pb-1 add" data-id="{{$item->rowId}}">
                                                 <i class="fa fa-plus"></i>
                                             </button>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                   $ {{$cartContent->price*$cartContent->qty}}
+                                   $ {{$item->price*$item->qty}}
                                 </td>
+
                                 <td>
-                                    <button id="deleteBtn" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
-                                    <form action="{{ route('front.deleteCart',$Cart->id) }}" method="post">
+                                    <button id="deleteBtn" class="btn btn-sm btn-danger "><i class="fa fa-times"></i></button>
+                                    <form action="{{ route('front.deleteCart',$item->rowId) }}" method="post">
                                         @csrf
                                     @method('DELETE')
                                         </form>
@@ -118,7 +119,7 @@
                              <div>${{Cart::subtotal()}}</div> 
                         </div>
                         <div class="pt-5">
-                            <a href="login.php" class="btn-dark btn btn-block w-100">Proceed to Checkout</a>
+                            <a href="{{route('front.checkout')}}" class="btn-dark btn btn-block w-100">Proceed to Checkout</a>
                         </div>
                     </div>
                 </div>     
@@ -181,17 +182,17 @@
                     });
                  }
                </script>
+              
 
 
-
-
-
-
-@push('customJs')
+            
+                 
+                 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 
-$('.deleteBtn').click(function (event){
+$('#deleteBtn').click(function (event){
+
   event.preventDefault()
     Swal.fire({
   title: "Are you sure?",
@@ -203,7 +204,7 @@ $('.deleteBtn').click(function (event){
   confirmButtonText: "Yes, delete it!"
 }).then((result) => {
   if (result.isConfirmed) {
-   $(this).next('form').submit()
+   $(this).next('form').submit().prev()
   }
 });
 
@@ -211,6 +212,7 @@ $('.deleteBtn').click(function (event){
 
     </script>
 @endpush
-    
-               @endpush
+
+
+ 
 @endsection

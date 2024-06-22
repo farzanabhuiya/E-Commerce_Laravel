@@ -227,8 +227,8 @@
 
 
 
-    <script src="{{asset('frontend/js/jquery-3.6.0.min.js')}}"></script>
-
+    {{-- <script src="{{asset('frontend/js/jquery-3.6.0.min.js')}}"></script> --}}
+{{-- 
        @push('customJs')       
 
        <script type="text/javascript">
@@ -252,8 +252,44 @@
 
         }      
 </script>
-       @endpush
-       @endsection
+       @endpush --}}
+     
+
+
+
+       @push('customJs')
+<script src="{{asset('frontend/js/jquery-3.6.0.min.js')}}"></script>
+
+<script type="text/javascript">
+    function addtoCart(id) {
+        $.ajax({
+            url: "{{route('front.addtoCart')}}",
+             type: 'POST',
+              data: {
+                id:id,
+                
+            },
+            dataType:'json',
+            success:function(response){
+              let cart =[];
+                cart = response;
+               
+               if(  cart.status == true){
+                alert(cart.message)
+
+               }else{
+                alert(cart.message)
+               }
+
+            } 
+        })
+    }
+
+</script>
+
+@endpush
+
+@endsection
 
 
 
