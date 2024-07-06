@@ -12,25 +12,16 @@ class BrandController extends Controller
 {
     use SlugGenerator;
 
-    // function index(Request $request){
-    //     $brands= Brand::latest();
-    //     if(!empty($request->get('key'))){
-    //       $brands=$brands->where('name','like','%'.$request->get('key').'%');
-    //     }
-    //     $brands=$brands->paginate(3);
+    function index(Request $request){
+        $brands= Brand::latest();
 
-    //  return view('backend.Brand.create-brand',compact('brands'));
-    // }
+        if($request->get('keyword')){
+          $brands=$brands->where('name','like','%'.$request->keyword.'%');
+        }
+        $brands=$brands->paginate(3);
 
-
-
-
-    function index(){
-        $brands= Brand::latest()->paginate(3);
-
-     return view('backend.Brand.create-brand',compact('brands'));
+     return view('backend.Brand.List-brands',compact('brands'));
     }
-
 
 
     public function create(Request $request){
@@ -40,7 +31,7 @@ class BrandController extends Controller
      $brand->save();
      return back();
     }
- 
+  
 
 public function story(){
     $brands= Brand::latest()->paginate(3);

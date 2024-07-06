@@ -145,7 +145,7 @@
                 <div class="col-md-3">
                     <div class="card product-card">
                         <div class="product-image position-relative">
-                            <a href="{{route('front.product',$product->slug)}}" class="product-img"><img style="width: 260px;height:300px object-fit:cover;obect-position:center;" 
+                            <a href="{{route('front.product',$product->slug)}}" class="product-img"><img style="width: 200px;height:300px object-fit:cover;obect-position:center;" 
                                 class="card-img-top" src="{{asset('storage/product/'.$product->image)}}" alt=""></a>
                             <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
 
@@ -174,6 +174,8 @@
             </div>
         </div>
     </section>
+
+
 
     <section class="section-4 pt-5">
         <div class="container">
@@ -265,10 +267,7 @@
         $.ajax({
             url: "{{route('front.addtoCart')}}",
              type: 'POST',
-              data: {
-                id:id,
-                
-            },
+              data: {id:id,},
             dataType:'json',
             success:function(response){
               let cart =[];

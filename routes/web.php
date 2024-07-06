@@ -6,7 +6,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\DiscountCuponController;
 use App\Http\Controllers\Backend\productC0ntroller;
+use App\Http\Controllers\Backend\ShippingController;
 use App\Http\Controllers\Backend\TempImageController;
 use App\Http\Controllers\Backend\SubcategorieController;
 use App\Http\Controllers\Frontend\CartController;
@@ -27,6 +29,9 @@ Route::delete('/deletecart/{rowId}',[CartController::class,'delete'])->name('fro
 Route::get('/checkout',[CartController::class,'checkout'])->name('front.checkout');
 Route::post('/processCheckout',[CartController::class,'processCheckout'])->name('front.processCheckout');
 Route::get('/thanks',[CartController::class,'thanks'])->name('front.thanks');
+Route::post('/getorderSummery',[CartController::class,'getorderSummery'])->name('front.getorderSummery');
+Route::post('/coupon',[CartController::class,'applycoupon'])->name('front.applyCoupon');
+Route::post('/remove',[CartController::class,'removeCoupon'])->name('front.removeCoupon');
 
 
 
@@ -92,4 +97,9 @@ Route::get('/relatedproduct',[productC0ntroller::class,'relatedproduct'])->name(
 
 
 
+Route::get('/shipping',[ShippingController::class,'create'])->name('shipping.create');
+Route::post('/shipping',[ShippingController::class,'story'])->name('shipping.story');
 
+Route::get('/DiscountCupon',[DiscountCuponController::class,'index'])->name('discountCupon.index');
+Route::get('/DiscountCupon-create',[DiscountCuponController::class,'create'])->name('discountCupon.create');
+Route::post('/DiscountCupon-story',[DiscountCuponController::class,'story'])->name('discountCupon.story');

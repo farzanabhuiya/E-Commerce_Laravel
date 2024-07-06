@@ -18,6 +18,9 @@
 		<link rel="stylesheet" href="{{asset('admin/plugins/summernote/summernote.min.css')}}">
   <!---dropzone--->
 		<link rel="stylesheet" href="{{asset('admin/plugins/dropzone/min/dropzone.min.css')}}">
+
+		<!---/datetimepicker-->
+		<link rel="stylesheet" href="{{asset('admin/css/datetimepicker.css')}} ">
 		{{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 	</head>
@@ -124,7 +127,7 @@
 							</li>
 							
 							<li class="nav-item">
-								<a href="#" class="nav-link">
+								<a href="{{route('shipping.create')}}" class="nav-link">
 									<!-- <i class="nav-icon fas fa-tag"></i> -->
 									<i class="fas fa-truck nav-icon"></i>
 									<p>Shipping</p>
@@ -137,7 +140,7 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="discount.html" class="nav-link">
+								<a href="{{route('discountCupon.index')}}" class="nav-link">
 									<i class="nav-icon  fa fa-percent" aria-hidden="true"></i>
 									<p>Discount</p>
 								</a>
@@ -204,6 +207,8 @@
 <script src="{{asset('admin/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('admin/js/demo.js')}}"></script>
+  <!---/datetimepicker--->
+<script src="{{asset('admin/js/datetimepicker.js')}}"></script>
 @stack('customJs')
 
 

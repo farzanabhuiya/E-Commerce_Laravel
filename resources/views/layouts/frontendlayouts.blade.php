@@ -237,29 +237,6 @@ function myFunction() {
             });
 </script>
 
-
-{{-- <script>
-	function addtoCart(id){
-		
-		$.ajax({
-			url:'{{route("front.addtoCart")}}',
-			type:'POST',
-			data: {id:id},
-			dataType:'json',
-			success:function(response){
-			 if(response.status==true){
-				alert(response.message);
-				window.location.href="{{route('front.cart')}}";
-			 }else{
-				 
-				alert(response.message);
-			 }
-			}
-		});
-
-	}      
-</script> --}}
-{{-- @yield('customJs') --}}
 </body>
 </html>
 

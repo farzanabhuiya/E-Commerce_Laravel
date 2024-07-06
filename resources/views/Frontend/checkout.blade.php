@@ -7,14 +7,17 @@
     <div class="container">
         <div class="light-font">
             <ol class="breadcrumb primary-color mb-0">
-                <li class="breadcrumb-item"><a class="white-text" href="#">Home</a></li>
-                <li class="breadcrumb-item"><a class="white-text" href="#">Shop</a></li>
+                <li class="breadcrumb-item"><a class="white-text" href="{{route('front.homepage')}}">Home</a></li>
+                <li class="breadcrumb-item"><a class="white-text" href="{{route('front.shopPage')}}">Shop</a></li>
                 <li class="breadcrumb-item">Checkout</li>
             </ol>
         </div>
     </div>
 </section>
-
+                    
+{{-- @if (Session::has('success'))
+<div class="alert alert-success">{{Session('success')}}</div>
+@endif --}}
 <section class="section-9 pt-4">
     <div class="container">
         <div class="row">
@@ -25,6 +28,7 @@
                 <div class="card shadow-lg border-0">
                     <div class="card-body checkout-form">
                         <div class="row">
+         
                          <form action="{{route('front.processCheckout')}}" method="post" >
                             @csrf
                             @method('post')
@@ -123,21 +127,41 @@
                         </div>
                         @endforeach
                         
-                     
-                        <div class="d-flex justify-content-between summery-end">
-                            <div class="h6"><strong>Subtotal</strong></div>
-                            <div class="h6"><strong>${{Cart::subtotal()}}</strong></div>
-                        </div>
+ 
+            
+                    <div class="d-flex justify-content-between summery-end">
+                        <div class="h6"><strong>Subtotal</strong></div>
+                        <div class="h6"><strong>${{Cart::subtotal()}}</strong></div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-2">
+                        <div class="h6"><strong>Discount</strong></div>
+                        <div class="h6"><strong id="discount_value">${{$discount}}</strong></div>
+                    </div>
                         <div class="d-flex justify-content-between mt-2">
                             <div class="h6"><strong>Shipping</strong></div>
-                            <div class="h6"><strong>$20</strong></div>
+                            <div class="h6"><strong id="shippingamount">${{number_format($totalshipping,2)}}</strong></div>
                         </div>
                         <div class="d-flex justify-content-between mt-2 summery-end">
                             <div class="h5"><strong>Total</strong></div>
-                            <div class="h5"><strong>${{Cart::subtotal()}}</strong></div>
+                            <div class="h5"><strong id="grandTotal">${{number_format($grandTotal,2)}}</strong></div>
                         </div>                            
                     </div>
-                </div>   
+                </div>  
+                        
+                <div class="input-group apply-coupan mt-4">
+                    <input type="text" name="code" placeholder="Coupon Code" class="form-control" name="discount_code" id="discount_code">
+                    <button class="btn btn-dark" type="button" id="apply-discount">Apply Coupon</button>
+                </div>
+
+                <div id="discount_res_wrapper">
+                @if (Session::has('code')) 
+                <div class="mt-4" id="discount_res">
+                    <strong>{{ Session::get('code')->code}}</strong>
+                    <a class="btn btn-sm btn-danger" id="remove_discount"><i class="fa fa-times"></i></a>
+                </div> 
+                @endif
+            </div>
                 
                 <div class="card payment-form "> 
                         <h3 class="card-title h5 mb-3">Payment Method</h3> 
@@ -179,6 +203,16 @@
                 </div>
             </form>
 
+           
+        
+            {{-- <div class="input-group apply-coupan mt-4">
+                <form action="{{route('front.ApplyCoupon')}}" method="post">
+                    @csrf
+              
+                <input type="text" name="code" placeholder="Coupon Code" class="form-control">
+                <button class="btn btn-dark" type="submit" id="button-addon2">Apply Coupon</button>
+            </form> </div>   --}}
+
                
                 <!-- CREDIT CARD FORM ENDS HERE -->
                 
@@ -209,6 +243,81 @@
 
        }
     });
+
+
+$('#countrie_id').change(function(){
+    $.ajax({
+        url:"{{route('front.getorderSummery')}}",
+        type:'post',
+        data:{countrie_id:$(this).val()},
+        dataType:'json',
+        success:function(response){
+            if(response.status == true){
+                $('#shippingamount').html('$'+response.shipping);
+                $('#grandTotal').html('$'+response.grandTotal);
+            }
+        }
+    });
+});
+
+</script>
+
+
+
+<script>
+             
+// $('body').on('click',"#apply-discount",function(){
+
+    $("#apply-discount").click(function(){
+    $.ajax({
+        url:"{{ route('front.applyCoupon') }}",
+        type:'POST',
+        data:{code:$("#discount_code").val(),countrie_id:$("#country").val()},
+        dataType:'json',
+        success:function(response){
+         if(response.status == true){
+            $('#shippingamount').html('$'+response.shipping);
+            $('#grandTotal').html('$'+response.grandTotal); 
+            $('#discount_value').html('$'+response.discount);
+            $('#discount_res_wrapper').html('$'+response.discountString);
+         }
+  
+        }
+
+    });
+});
+
+
+             
+ $('body').on('click',"#remove_discount",function(){
+// $("#remove_discount").click(function(){
+    $.ajax({
+        url:"{{ route('front.removeCoupon') }}",
+        type:'POST',
+        data:{countrie_id:$("#country").val()},
+        dataType:'json',
+        success:function(response){
+         if(response.status == true){
+            $('#shippingamount').html('$'+response.shipping);
+            $('#grandTotal').html('$'+response.grandTotal); 
+            $('#discount_value').html('$'+response.discount);
+            $('#discount_res').html('');
+            $("#discount_code").val('');
+         }
+  
+        }
+
+    });
+});
+//  });
+
+
+// });
+
+
+
+
+
 </script>
 @endpush
     
