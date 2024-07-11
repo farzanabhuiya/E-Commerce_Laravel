@@ -15,6 +15,7 @@ use App\Models\CustomerAddersse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 // use Illuminate\Contracts\Session\Session;
@@ -169,11 +170,11 @@ return response()->json([
 
     public function checkout(){
            
-   $categorie= Category::orderBy('name','ASC')->with('Subcategorie')->where('showhome','Yes')->get();
-   $cartContents = Cart::content();
+          $categorie= Category::orderBy('name','ASC')->with('Subcategorie')->where('showhome','Yes')->get();
+          $cartContents = Cart::content();
+          $discount =0;
 
 
-        $discount =0;
          if(Cart::content()->count() ==0){
                return view('Frontend.Cart',compact('categorie','cartContents'));
              }
@@ -181,10 +182,10 @@ return response()->json([
               $countries=countrie::orderBy('name','ASC')->get();
               $CustomerAddersse = CustomerAddersse::where('user_id',auth()->user()->id)->first();
               $categorie= Category::orderBy('name','ASC')->with('Subcategorie')->where('showhome','Yes')->get();
-             
+              $subTotal = Cart::subtotal(2,'.','');
              
               //apply discount
-              $subTotal = Cart::subtotal(2,'.','');
+           
               if(session()->has('code')){
                 $code = session()->get('code');
         
@@ -196,10 +197,10 @@ return response()->json([
                }
 
 
-
+               ///calculate shipping here
               if( $CustomerAddersse  !=''){
                 $usercountry= $CustomerAddersse->countrie_id;
-                $shippingInfo = Shipping::where('countrie_id',  $usercountry)->first();
+                $shippingInfo = Shipping::where('countrie_id',$usercountry)->first();
                 
                 $totalqty =0;
                 $totalshipping=0;
@@ -232,7 +233,7 @@ return view('Frontend.checkout',$data);
 
 
    function processCheckout(Request $request){
-
+      
      // step 1 save user addres
           $address = new CustomerAddersse();
           $address->user_id=auth()->user()->id;
@@ -256,8 +257,6 @@ return view('Frontend.checkout',$data);
              $shipping= 0;
              $discount =0;
              $subTotal = Cart::subtotal(2,'.','');
-           
-
 
          //apply discount here
        if(session()->has('code')){
@@ -291,8 +290,8 @@ return view('Frontend.checkout',$data);
            $shippingInfo=Shipping::where('countrie_id','rest')->first();
            $shipping= $totalqty*$shippingInfo->amount;
            $grandTotal =($subTotal-$discount)+ $shipping; 
+       }   
 
-       }        
           $order = new Order();
           $order->subtotal=$subTotal ;
           $order->shipping=$shipping;
@@ -329,7 +328,7 @@ return view('Frontend.checkout',$data);
             }
             session()->forget('code');
          }
-        
+         
         return back();           
     
    }
@@ -337,6 +336,7 @@ return view('Frontend.checkout',$data);
 
 
    function getorderSummery(Request $request){
+
        $subTotal = Cart::subtotal(2,'.','');
        $discount= 0;
        $discountString='';
@@ -393,40 +393,79 @@ return view('Frontend.checkout',$data);
                'discount' =>$discount,
                'discountString' =>$discountString,
                'shipping'=>number_format($shipping,2),
-           ]);
-
-
-       }
-        
-
-    } else{
+                     ]);
+              }
+            
+            } else{
          return response()->json([
             'status' =>true,
             'grandTotal' => number_format(($subTotal-$discount),2),
             'discount' =>$discount,
-            'shiping'=>number_format(0,2), 
+            'discountString' =>$discountString,
+            'shipping'=>number_format(0,2), 
 
-        ]);
+               ]);
 
-    }
+           }
 
-   }
+      }
 
 
 
-  public function applycoupon(Request $request){
-    $code = DiscountCupon::where('code',$request->code)->first();
-    if($code == null){
 
-        return response()->json([
-            'status' =>false,
-            'message' =>'Invalid discount coupone',
+
+     public function applycoupon(Request $request){
+      // return $request->all();
+         $code = DiscountCupon::where('code',$request->code)->first();
+         if($code == null){
+     
+             return response()->json([
+                 'status' =>false,
+                 'message' =>'Invalid discount coupone',
+      
+     
+            ]); 
+         }
+             ///max_uses check
+
+           if( $code->max_uses >0){
+             $couponused= Order::where('coupon_code_id',$code->id)->count();
+             if($couponused >= $code->max_uses){
+                    
+                 return response()->json([
+                   'status' =>false,
+                   'message' =>'Invalid discount coupone',
+               ]); 
+            }
+           }
  
 
-        ]); 
-    }
-    session()->put('code',$code);
-    return $this->getorderSummery($request);
+           ///max_uses user check
+          if( $code->max_uses_user >0){
+          
+            $couponusedByuder= Order::where(['coupon_code_id'=> $code->id,'user_id' =>auth()->user()->id])->count();
+            if($couponusedByuder >= $code->max_uses_user){
+                          
+                  return response()->json([
+                    'status' =>false,
+                    'message' =>'You already used this coupone code',
+                ]); 
+              }
+          }
+         
+          //min_amount condution check
+          $subTotal = Cart::subtotal(2,'.','');
+          if($code->min_amount > 0){
+             if($subTotal< $code->min_amount){
+              return response()->json([
+                'status' =>false,
+                'message' =>'You amount must be $' .$code->min_amount.'.',
+                  ]);
+             }
+          }
+
+       session()->put('code',$code);
+       return $this->getorderSummery($request);
 
    }
 

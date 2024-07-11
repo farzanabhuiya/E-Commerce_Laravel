@@ -52,10 +52,10 @@
                              <div class="col-md-12">
                                 <div class="mb-3">
                                     <select name="country" id="countrie_id" class="form-control">
-                                        <option value="">Select a Country</option>
+                                        <option disabled selected >Select a Country</option>
                                          @forelse ($countries as $countrie )
-                                               {{-- <option {{(!empty($CustomerAddersse) && $CustomerAddersse->countrie_id == $countrie->id)? 'seleted' : ""}} value="{{$countrie->id}}">{{$countrie->name}}</option> --}}
-                                     <option value="{{$countrie->id}}">{{$countrie->name}}</option>
+                                               <option {{(!empty($CustomerAddersse) && $CustomerAddersse->countrie_id == $countrie->id)? 'selected' : ""}} value="{{$countrie->id}}">{{$countrie->name}}</option>
+                                     {{-- <option value="{{$countrie->id}}">{{$countrie->name}}</option> --}}
                                          @empty
                                              
                                          @endforelse 
@@ -203,16 +203,6 @@
                 </div>
             </form>
 
-           
-        
-            {{-- <div class="input-group apply-coupan mt-4">
-                <form action="{{route('front.ApplyCoupon')}}" method="post">
-                    @csrf
-              
-                <input type="text" name="code" placeholder="Coupon Code" class="form-control">
-                <button class="btn btn-dark" type="submit" id="button-addon2">Apply Coupon</button>
-            </form> </div>   --}}
-
                
                 <!-- CREDIT CARD FORM ENDS HERE -->
                 
@@ -265,21 +255,25 @@ $('#countrie_id').change(function(){
 
 
 <script>
-             
-// $('body').on('click',"#apply-discount",function(){
 
     $("#apply-discount").click(function(){
     $.ajax({
         url:"{{ route('front.applyCoupon') }}",
         type:'POST',
-        data:{code:$("#discount_code").val(),countrie_id:$("#country").val()},
+        data:{
+            code:$("#discount_code").val(),
+            countrie_id:$("#countrie_id").val()
+    },
         dataType:'json',
         success:function(response){
+    //    console.log(response.shipping);
          if(response.status == true){
             $('#shippingamount').html('$'+response.shipping);
             $('#grandTotal').html('$'+response.grandTotal); 
             $('#discount_value').html('$'+response.discount);
-            $('#discount_res_wrapper').html('$'+response.discountString);
+            $('#discount_res_wrapper').html(response.discountString);
+         }else{
+         $('#discount_res_wrapper').html("<span class='text-danger'>"+response.message+"</span>");
          }
   
         }

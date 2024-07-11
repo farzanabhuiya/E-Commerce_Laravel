@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\Category;
+use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\Return_;
 use Illuminate\Foundation\Auth\User;
 
 class ProfileController extends Controller
@@ -38,5 +40,10 @@ class ProfileController extends Controller
     
     
     
+   }
+
+   public function profileAccount(Request $request){
+    $categorie= Category::orderBy('name','ASC')->with('Subcategorie')->where('showhome','Yes')->get();
+    return view('Account.account',compact('categorie'));
    }
 }

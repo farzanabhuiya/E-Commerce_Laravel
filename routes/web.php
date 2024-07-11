@@ -39,13 +39,24 @@ Route::post('/remove',[CartController::class,'removeCoupon'])->name('front.remov
 
 Auth::routes();
 
+
+
+
+// Route::group(['middleware' => 'auth'], function()
+
+// Route::group(['middleware' => ['role:admin']], function (){
+// Route::group(['middleware' =>'auth'], function(){
+  
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/profile',[ProfileController::class,'showfile'])->name('profile');
 Route::put('/profile-update',[ProfileController::class,'profileUpdate'])->name('profile.update');
+// });
+ Route::get('/account',[ProfileController::class,'profileAccount'])->name('profile.account');
 
 
 
 //category
+// Route::group(['middleware' => ['role:admin']], function (){
 Route::get('/category',[CategoryController::class,'index'])->name('category');
 Route::get('/category-create',[CategoryController::class,'create'])->name('category.create');
 Route::post('/category-store',[CategoryController::class,'store'])->name('category.store');
@@ -53,13 +64,13 @@ Route::get('/category-edit/{id}',[CategoryController::class,'edit'])->name('cate
 Route::put('/category-update/{id}',[CategoryController::class,'update'])->name('category.update');
 Route::delete('/category-delete/{id}',[CategoryController::class,'destroy'])->name('category.delete');
 
-//temp-images.create
+//});
 
-// Route::post('/upload-temp-image',[TempImageController::class,'create'])->name('temp.image.create');
 
 
 
 ///subcategorie
+
 Route::get('/subcategorie',[SubcategorieController::class,'index'])->name('Subcategorie.index');
 Route::post('/subcategorie-create',[SubcategorieController::class,'create'])->name('Subcategorie.create');
 Route::get('/subcategorie-story',[SubcategorieController::class,'story'])->name('Subcategorie.story');

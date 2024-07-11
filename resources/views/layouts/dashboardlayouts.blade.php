@@ -93,6 +93,10 @@
 						<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 							<!-- Add icons to the links using the .nav-icon class
 								with font-awesome or any other icon font library -->
+
+						{{-- @hasanyrole(['admin','writer']) --}}
+
+					
 							<li class="nav-item">
 								<a href="{{route('profile')}}" class="nav-link">
 									<i class="nav-icon fas fa-tachometer-alt"></i>
@@ -119,6 +123,7 @@
 									<p>Brands</p>
 								</a>
 							</li>
+						
 							<li class="nav-item">
 								<a href="{{route('Product.all')}}" class="nav-link">
 									<i class="nav-icon fas fa-tag"></i>
@@ -145,6 +150,7 @@
 									<p>Discount</p>
 								</a>
 							</li>
+							{{-- @endhasanyrole --}}
 							<li class="nav-item">
 								<a href="users.html" class="nav-link">
 									<i class="nav-icon  fas fa-users"></i>
@@ -156,7 +162,11 @@
 									<i class="nav-icon  far fa-file-alt"></i>
 									<p>Pages</p>
 								</a>
-							</li>							
+							</li>
+							
+							{{-- @endhasanyrole --}}
+							
+
 						</ul>
 					</nav>
 					<!-- /.sidebar-menu -->
