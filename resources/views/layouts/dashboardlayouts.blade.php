@@ -94,7 +94,10 @@
 							<!-- Add icons to the links using the .nav-icon class
 								with font-awesome or any other icon font library -->
 
-						{{-- @hasanyrole(['admin','writer']) --}}
+								@role('admin')
+						
+
+						{{-- @hasanyrole(['admin']) --}}
 
 					
 							<li class="nav-item">
@@ -150,7 +153,7 @@
 									<p>Discount</p>
 								</a>
 							</li>
-							{{-- @endhasanyrole --}}
+							
 							<li class="nav-item">
 								<a href="users.html" class="nav-link">
 									<i class="nav-icon  fas fa-users"></i>
@@ -166,7 +169,27 @@
 							
 							{{-- @endhasanyrole --}}
 							
+							
 
+
+							@else
+
+
+							<li class="nav-item">
+								<a href="{{route('Subcategorie.story')}}" class="nav-link">
+									<i class="nav-icon fas fa-file-alt"></i>
+									<p>Sub Category</p>
+								</a>
+							</li>
+
+
+							<li class="nav-item">
+								<a href="{{route('Product.all')}}" class="nav-link">
+									<i class="nav-icon fas fa-tag"></i>
+									<p>Products</p>
+								</a>
+							</li>
+							@endrole
 						</ul>
 					</nav>
 					<!-- /.sidebar-menu -->

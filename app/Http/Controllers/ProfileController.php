@@ -44,6 +44,6 @@ class ProfileController extends Controller
 
    public function profileAccount(Request $request){
     $categorie= Category::orderBy('name','ASC')->with('Subcategorie')->where('showhome','Yes')->get();
-    return view('Account.account',compact('categorie'));
+    return view('Frontend.Account.account',compact('categorie'));
    }
 }

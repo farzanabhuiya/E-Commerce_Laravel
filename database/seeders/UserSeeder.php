@@ -20,5 +20,8 @@ class UserSeeder extends Seeder
         $user->password='12345678';
         $user->save();
         $user->assignRole('admin');
+
+
+
     }
 }

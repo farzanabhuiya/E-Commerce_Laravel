@@ -14,15 +14,43 @@
         </div>
     </section>
 
-    <section class=" section-11 ">
-        
-            
+    <section class=" section-11 ">    
         <div class="container  mt-5">
-            <form action="{{route('profile.account')}}">
+            <form action="{{route('account.profile')}}">
                 @csrf
             <div class="row">
+
+
+
+    <div class="col-lg-4 pt-5">
+     <div class="card bg-success-subtle">
+      <div class="card-body ">
+    <form action=""  method="">
+    @csrf
+        <ul id="account-panel" class="nav nav-pills flex-column" >
+            <li class="nav-item">
+                <a href="account.php"  class="nav-link font-weight-bold" role="tab" aria-controls="tab-login" aria-expanded="false"><i class="fas fa-user-alt"></i> My Profile</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{route('account.order')}}"  class="nav-link font-weight-bold" role="tab" aria-controls="tab-register" aria-expanded="false"><i class="fas fa-shopping-bag"></i>My Orders</a>
+            </li>
+            <li class="nav-item">
+                <a href="wishlist.php"  class="nav-link font-weight-bold" role="tab" aria-controls="tab-register" aria-expanded="false"><i class="fas fa-heart"></i> Wishlist</a>
+            </li>
+            <li class="nav-item">
+                <a href="change-password.php"  class="nav-link font-weight-bold" role="tab" aria-controls="tab-register" aria-expanded="false"><i class="fas fa-lock"></i> Change Password</a>
+            </li>
+            <li class="nav-item">
+                <a href="login.php" class="nav-link font-weight-bold" role="tab" aria-controls="tab-register" aria-expanded="false"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </li>
+        </ul>
+        </form>           
+          </div>
+            </div>
+              </div>
+
         
-                <div class="col-md-9">
+                <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">
                             <h2 class="h5 mb-0 pt-2 pb-2">Personal Information</h2>
@@ -58,39 +86,6 @@
             </form>
         </div>
         
-
-
-
-        
-        <div class="col-lg-6">
-            <div class="card bg-success-subtle">
-                <div class="card-body ">
-                 
-<form action=""  method="">
-
-@csrf
-<ul id="account-panel" class="nav nav-pills flex-column" >
-    <li class="nav-item">
-        <a href="account.php"  class="nav-link font-weight-bold" role="tab" aria-controls="tab-login" aria-expanded="false"><i class="fas fa-user-alt"></i> My Profile</a>
-    </li>
-    <li class="nav-item">
-        <a href="my-orders.php"  class="nav-link font-weight-bold" role="tab" aria-controls="tab-register" aria-expanded="false"><i class="fas fa-shopping-bag"></i>My Orders</a>
-    </li>
-    <li class="nav-item">
-        <a href="wishlist.php"  class="nav-link font-weight-bold" role="tab" aria-controls="tab-register" aria-expanded="false"><i class="fas fa-heart"></i> Wishlist</a>
-    </li>
-    <li class="nav-item">
-        <a href="change-password.php"  class="nav-link font-weight-bold" role="tab" aria-controls="tab-register" aria-expanded="false"><i class="fas fa-lock"></i> Change Password</a>
-    </li>
-    <li class="nav-item">
-        <a href="login.php" class="nav-link font-weight-bold" role="tab" aria-controls="tab-register" aria-expanded="false"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </li>
-</ul>
-</form>           
-        </div>
-    </div>
-
-</div>
 
     </section>
 </main>

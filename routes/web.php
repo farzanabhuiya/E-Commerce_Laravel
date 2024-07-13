@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\productC0ntroller;
 use App\Http\Controllers\Backend\ShippingController;
 use App\Http\Controllers\Backend\TempImageController;
 use App\Http\Controllers\Backend\SubcategorieController;
+use App\Http\Controllers\Frontend\AccountController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Frontend\ShopController;
@@ -19,7 +20,13 @@ use Mockery\Matcher\Subset;
 // Route::get('/', function () {
 //     return view('Frontend.Homepage');
 // });
+
+
+  //(/)dawar koran holo jokon project run hobe ba hobar sathe sathe jay page tah dakhta cai oi page url moddha / tah use hobe
 Route::get('/',[HomePageController::class,'index'])->name('front.homepage');
+
+
+
 Route::get('/shop/{categoryslug?}/{subcategorieslug?}',[ShopController::class,'index'])->name('front.shopPage');
 Route::get('/product/{slug}',[ShopController::class,'product'])->name('front.product');
 Route::get('/cart',[CartController::class,'cart'])->name('front.cart');
@@ -40,23 +47,23 @@ Route::post('/remove',[CartController::class,'removeCoupon'])->name('front.remov
 Auth::routes();
 
 
-
-
-// Route::group(['middleware' => 'auth'], function()
-
-// Route::group(['middleware' => ['role:admin']], function (){
-// Route::group(['middleware' =>'auth'], function(){
+    Route::group(['middleware' => ['role:admin|writer']], function (){
   
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/profile',[ProfileController::class,'showfile'])->name('profile');
 Route::put('/profile-update',[ProfileController::class,'profileUpdate'])->name('profile.update');
-// });
- Route::get('/account',[ProfileController::class,'profileAccount'])->name('profile.account');
+});
+
+
+
+ Route::get('/account',[ProfileController::class,'profileAccount'])->name('account.profile');
+ Route::get('/account-order',[AccountController::class,'Order'])->name('account.order');
+ Route::get('/account-orderDetail/{orderID}',[AccountController::class,'OrderDetail'])->name('account.orderDetail');
 
 
 
 //category
-// Route::group(['middleware' => ['role:admin']], function (){
+ Route::group(['middleware' => ['role:admin']], function (){
 Route::get('/category',[CategoryController::class,'index'])->name('category');
 Route::get('/category-create',[CategoryController::class,'create'])->name('category.create');
 Route::post('/category-store',[CategoryController::class,'store'])->name('category.store');
@@ -64,13 +71,13 @@ Route::get('/category-edit/{id}',[CategoryController::class,'edit'])->name('cate
 Route::put('/category-update/{id}',[CategoryController::class,'update'])->name('category.update');
 Route::delete('/category-delete/{id}',[CategoryController::class,'destroy'])->name('category.delete');
 
-//});
+});
 
 
 
 
 ///subcategorie
-
+Route::group(['middleware' => ['role:admin|writer']], function (){
 Route::get('/subcategorie',[SubcategorieController::class,'index'])->name('Subcategorie.index');
 Route::post('/subcategorie-create',[SubcategorieController::class,'create'])->name('Subcategorie.create');
 Route::get('/subcategorie-story',[SubcategorieController::class,'story'])->name('Subcategorie.story');
@@ -81,7 +88,7 @@ Route::delete('/subcategorie-delete/{id}',[SubcategorieController::class,'delete
 
 
 Route::get('/get-all-subcategories',[SubcategorieController::class,'getSubcategories'])->name('Subcategorie.get');
-
+});
 
 //brand 
 
@@ -96,7 +103,7 @@ Route::delete('/brand-delete/{id}',[BrandController::class,'delete'])->name('Bra
 
 
 //product
-
+Route::group(['middleware' => ['role:admin']], function (){
 Route::get('/product-create',[productC0ntroller::class,'create'])->name('Product.create');
 Route::post('/product-story',[productC0ntroller::class,'story'])->name('Product.story');
 Route::get('/product-all',[productC0ntroller::class,'allProduct'])->name('Product.all');
@@ -105,6 +112,8 @@ Route::put('/product-update/{id}',[productC0ntroller::class,'update'])->name('Pr
 Route::delete('/product-update/{id}',[productC0ntroller::class,'delete'])->name('Product.delete');
 
 Route::get('/relatedproduct',[productC0ntroller::class,'relatedproduct'])->name('Product.related');
+});
+
 
 
 

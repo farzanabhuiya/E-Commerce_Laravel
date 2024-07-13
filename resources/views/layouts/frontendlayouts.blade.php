@@ -58,7 +58,15 @@
 				</a>
 			</div>
 			<div class="col-lg-6 col-6 text-left  d-flex justify-content-end align-items-center">
-				<a href="account.php" class="nav-link text-dark">My Account</a>
+
+				<a href="#" class="nav-link text-dark">My Account</a>
+				{{-- @if (auth::check())
+				<a href="{{route('account.profile')}}" class="nav-link text-dark">My Account</a>
+				@else
+
+				<a href="{{route('login')}}" class="nav-link text-dark">Login/Register</a>
+				@endif --}}
+			
 				<form action="">					
 					<div class="input-group">
 						<input type="text" placeholder="Search For Products" class="form-control" aria-label="Amount (to the nearest dollar)">
@@ -101,25 +109,9 @@
 							@endforeach 
 					</ul>
 					</li>
+					 
 					@endforeach 
-
-					{{-- @guest
-					<li >
-						<button href="{{route('login')}}" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-							Loging
-						</button>
-						
-					</li>
-					@endguest
-
-
-					@auth
-					<li >
-						<button  href="{{route('homepage')}}" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-							{{auth()->user()->name}}
-						</button>
-					</li>
-					@endauth --}}
+				
 					
 
 					@guest
@@ -130,13 +122,41 @@
                     @endguest
 
                     @auth
+					{{-- @role(['admin','writer'])
                     <li class="nav-item">
-                      <a href="{{route('front.homepage')}}" class="nav-link">{{auth()->user()->name }}</a>
+                      <a href="{{route('home')}}" class="nav-link">{{auth()->user()->name }}</a>
                   </li>
+                  @else
+				  <li class="nav-item">
+					<a href="{{route('front.homepage')}}" class="nav-link">{{auth()->user()->name }}</a>
+				</li>
+				  @endrole --}}
+
+                 @role(['admin','writer'])
+				  <li class="nav-item">
+					<a href="{{route('home')}}" class="nav-link">{{auth()->user()->name }}</a>
+				</li>
+				@else
+				<li class="nav-item">
+				  <a href="{{route('front.homepage')}}" class="nav-link">{{auth()->user()->name }}</a>
+			  </li>
+				@endrole 
+
                   @endauth
 
 
-
+				  {{-- <li class="nav-item">
+					<a href="{{ route('logout') }}"onclick="event.preventDefault();
+					document.getElementById('logout-form').submit();" class="nav-link active">
+						 Logout							
+					</a>
+					
+					
+				 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+					 @csrf
+				 </form>
+			 </div>
+			  </li> --}}
 
       			</ul>      			
       		</div>   
