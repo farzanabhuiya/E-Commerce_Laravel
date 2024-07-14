@@ -145,20 +145,18 @@
                   @endauth
 
 
-				  {{-- <li class="nav-item">
+				  <li class="nav-item">
 					<a href="{{ route('logout') }}"onclick="event.preventDefault();
 					document.getElementById('logout-form').submit();" class="nav-link active">
 						 Logout							
 					</a>
 					
-					
 				 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
 					 @csrf
 				 </form>
-			 </div>
-			  </li> --}}
+			  </li>
+      			</ul> 
 
-      			</ul>      			
       		</div>   
 			<div class="right-nav py-0">
 				<a href="{{route('front.cart')}}" class="ml-3 d-flex pt-2">
