@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Helpers;
 
 
+use App\Models\Order;
+use App\Mail\OrderEmail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 
 
 trait SlugGenerator {
@@ -20,6 +23,18 @@ trait SlugGenerator {
            return $slug = str($name)->slug();
         }
  
+    }
+
+    public function orderEmail($orderId){
+        $order =Order::where('id',$orderId)->with('items')->first();
+
+        $mailData = [
+            'subjet' => 'Thanks for your order',
+            'order' =>$order
+        ];
+
+        Mail::to($order->email)->send(new OrderEmail($mailData));
+      
     }
 }
 

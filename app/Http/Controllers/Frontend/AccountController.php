@@ -25,10 +25,12 @@ class AccountController extends Controller
 
         $order= Order::where('user_id',auth()->user()->id)->where('id',$id)->first();
         $orderItems= Order_item::where('order_id',$id)->get();
+        $ordercounts= Order_item::where('order_id',$id)->count();
 
         $data['categorie'] =$categorie;
         $data['order'] =$order;
         $data['orderItems'] =$orderItems;
+        $data['ordercounts'] = $ordercounts;
         return view('Frontend.Account.order_detail',$data);
     }
 }

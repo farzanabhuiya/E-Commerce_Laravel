@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\product;
+use App\Mail\OrderEmail;
 use App\Models\Category;
 use App\Models\countrie;
 use App\Models\Shipping;
@@ -13,15 +14,20 @@ use Illuminate\Http\Request;
 use App\Models\DiscountCupon;
 use App\Models\CustomerAddersse;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Session;
-use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Helpers\email;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Http\Controllers\Helpers\SlugGenerator;
 
 // use Illuminate\Contracts\Session\Session;
 
 class CartController extends Controller
 {
+  use email;
+
     
     public function cart(Request $request){
        
@@ -173,7 +179,7 @@ return response()->json([
           $categorie= Category::orderBy('name','ASC')->with('Subcategorie')->where('showhome','Yes')->get();
           $cartContents = Cart::content();
           $discount =0;
-
+          $CustomerAddersse = CustomerAddersse::where('user_id',auth()->user()->id)->first();
 
          if(Cart::content()->count() ==0){
                return view('Frontend.Cart',compact('categorie','cartContents'));
@@ -198,9 +204,10 @@ return response()->json([
 
 
                ///calculate shipping here
-              if( $CustomerAddersse  !=''){
+              if( $CustomerAddersse  != null){
                 $usercountry= $CustomerAddersse->countrie_id;
                 $shippingInfo = Shipping::where('countrie_id',$usercountry)->first();
+              
                 
                 $totalqty =0;
                 $totalshipping=0;
@@ -214,9 +221,7 @@ return response()->json([
              }else{
                 $grandTotal  = ($subTotal-$discount);
                 $totalshipping =0;
-
              }  
-
  }
 
  $data['categorie']=$categorie;
@@ -329,10 +334,29 @@ return view('Frontend.checkout',$data);
             $orderitem->save();
             }
             session()->forget('code');
+            //send order email
+            $this->orderEmail($order->id,'customer');
+
+
+
+
+
+            // $order =Order::where('order_id',$order->id)->with('items')->first();
+
+            //         $mailData = [
+            //             'order_id' =>$order->id,
+            //            'order' =>$order,
+            //         ];
+            
+            //         Mail::to($request->email)->send(new OrderEmail($mailData));
+            //         //  dd($order);
          }
-         
-        return back();           
-    
+      
+
+
+        // return back();           
+        return view('Frontend.checkout');
+      
    }
 
 
@@ -478,23 +502,13 @@ return view('Frontend.checkout',$data);
      return $this->getorderSummery($request);
    }
    
+
+
+
+
+   
 }
 
-//       function ApplyCoupon(Request $request){
-//            $check = DiscountCupon::where('code',$request->code)->first();
-
-//        if($check){
-
-//         Session::put('coupon',[
-//                        'code' =>$check->code,
-//                    'discount_amount' =>$check->discount_amount,
-//                  ]);
-//                  return Redirect()->back()->with('success',' yes coupon apply');
-//        }else{
-//         return Redirect()->back()->with('success','no coupon apply');
-
-// }
-//       }
     
     
     

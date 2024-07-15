@@ -22,6 +22,10 @@ use Mockery\Matcher\Subset;
 //     return view('Frontend.Homepage');
 // });
 
+//  Route::get('/test', function () {
+//   orderEmail();
+//  });
+
 
   //(/)dawar koran holo jokon project run hobe ba hobar sathe sathe jay page tah dakhta cai oi page url moddha / tah use hobe
 Route::get('/',[HomePageController::class,'index'])->name('front.homepage');
@@ -116,6 +120,8 @@ Route::get('/relatedproduct',[productC0ntroller::class,'relatedproduct'])->name(
                                  /// Order 
 Route::get('/order',[OrderController::class,'index'])->name('order.index');
 Route::get('/order/{id}',[OrderController::class,'detail'])->name('order.detail');
+Route::post('/orderUpdate/{id}',[OrderController::class,'changeOrderUpdate'])->name('order.changeOrderUpdate');
+Route::post('/order/sendInvoEmail/{id}',[OrderController::class,'sendInvoEmail'])->name('order.sendInvoEmail');
 
                               //////shipping
 Route::get('/shipping',[ShippingController::class,'create'])->name('shipping.create');

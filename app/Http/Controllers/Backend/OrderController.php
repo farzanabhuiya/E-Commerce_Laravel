@@ -36,4 +36,23 @@ class OrderController extends Controller
         return view('backend.order.detail',compact('order','orderItems'));
 
     }
+
+    public function changeOrderUpdate(Request $request, $orderId){
+       $orderItems =Order_item::where('order_id',$orderId)->get();
+       $order               =  Order::find($orderId);
+       $order->status       =  $request->status;
+       $order->shipped_date =  $request->shipped_date;
+    //    dd($order);
+       $order->save();
+       return view('backend.order.detail',compact('order','orderItems'));
+
+
+    }
+                // admin customer kaca email jawa
+    public function sendInvoEmail(Request $request,$orderId){
+            $this->orderEmail($orderId,$request->userType);
+            return back();
+            // return view('backend.order.detail',compact('email'));
+
+    }
 }
