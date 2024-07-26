@@ -31,7 +31,7 @@ class ShippingController extends Controller
         $shippings->countrie_id=$request->country;
         $shippings->amount= $request->amount;
         $shippings->save();
-        return back();
+        return back()->with('success','Shipping Successfully Created');;
 
 }
 }

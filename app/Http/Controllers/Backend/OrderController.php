@@ -15,13 +15,15 @@ class OrderController extends Controller
         
         $orders = Order::latest('orders.created_at')->select('orders.*','users.name','users.email');
         $orders= $orders->leftjoin('users','users.id','orders.user_id');
+        //model ay relation kore dila amon ay code dila hobe
+        // $order = order::with('user')->get();
         if($request->get('keyword') != ""){
             $orders =$orders->where('users.name','like','%'.$request->keyword.'%');
             $orders =$orders->orWhere('users.email','like','%'.$request->keyword.'%');
             $orders =$orders->orWhere('orders.id','like','%'.$request->keyword.'%');
         }   
 
-        $orders= $orders->paginate(3);
+        $orders= $orders->paginate(5);
         return view('backend.order.list',compact('orders'));
 
 
@@ -50,7 +52,7 @@ class OrderController extends Controller
     }
                 // admin customer kaca email jawa
     public function sendInvoEmail(Request $request,$orderId){
-            $this->orderEmail($orderId,$request->userType);
+          $this->orderEmail($orderId,$request->userType);
             return back();
             // return view('backend.order.detail',compact('email'));
 

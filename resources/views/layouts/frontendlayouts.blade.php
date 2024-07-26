@@ -43,6 +43,9 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;500&family=Raleway:ital,wght@0,400;0,600;0,800;1,200&family=Roboto+Condensed:wght@400;700&family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
 
+	   {{-- wishlist success message link --}}
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 	<!-- Fav Icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="#" />
 </head>
@@ -59,20 +62,20 @@
 			</div>
 			<div class="col-lg-6 col-6 text-left  d-flex justify-content-end align-items-center">
 
-				<a href="#" class="nav-link text-dark">My Account</a>
-				{{-- @if (auth::check())
+			
+				@if (Auth::check())
 				<a href="{{route('account.profile')}}" class="nav-link text-dark">My Account</a>
 				@else
 
 				<a href="{{route('login')}}" class="nav-link text-dark">Login/Register</a>
-				@endif --}}
+				@endif
 			
-				<form action="">					
+				<form action="{{route('front.shopPage')}}" method="get">					
 					<div class="input-group">
-						<input type="text" placeholder="Search For Products" class="form-control" aria-label="Amount (to the nearest dollar)">
-						<span class="input-group-text">
+						<input value="{{Request::get('search')}}" type="text" placeholder="Search For Products" class="form-control" name="search">
+						<button type="submit" class="input-group-text">
 							<i class="fa fa-search"></i>
-					  	</span>
+					  	</button>
 					</div>
 				</form>
 			</div>		
@@ -121,16 +124,8 @@
                     </li>
                     @endguest
 
+
                     @auth
-					{{-- @role(['admin','writer'])
-                    <li class="nav-item">
-                      <a href="{{route('home')}}" class="nav-link">{{auth()->user()->name }}</a>
-                  </li>
-                  @else
-				  <li class="nav-item">
-					<a href="{{route('front.homepage')}}" class="nav-link">{{auth()->user()->name }}</a>
-				</li>
-				  @endrole --}}
 
                  @role(['admin','writer'])
 				  <li class="nav-item">
@@ -222,6 +217,33 @@
 		</div>
 	</div>
 </footer>
+
+
+
+
+
+                              {{-- wishlist success message --}}
+  <!-- Modal -->
+  <div class="modal fade" id="wishlistModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLabel">Success</h5>
+		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+		  ...
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		
+		</div>
+	  </div>
+	</div>
+  </div>
+  
+
+
 <script src="{{asset('frontend/js/jquery-3.6.0.min.js')}}"></script>
 <script src="{{asset('frontend/js/bootstrap.bundle.5.1.3.min.js')}}"></script></script>
 <script src="{{asset('frontend/js/instantpages.5.1.0.min.js')}}"></script>

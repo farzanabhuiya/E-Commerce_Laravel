@@ -26,9 +26,9 @@ class productC0ntroller extends Controller
      
         $product->title=$request->title;
         $count=product::where('slug','LIKE', '%'.str($request->title)->slug() .'%')->count();
-                 if($count>0){
-            $count++;
-            $slug=str($request->title)->slug() . '-' . $count;
+        if($count>0){
+         $count++;
+         $slug=str($request->title)->slug() . '-' . $count;
       }else{
            $slug= str($request->title)->slug();
       }  
@@ -51,7 +51,7 @@ class productC0ntroller extends Controller
         $product->status=$request->status;
         $product->save();
         // return view('backend.product.create-product',compact('product'));
-       return back();
+       return back()->with('success','Product Successfully Created');;
 
     }
 
@@ -82,13 +82,13 @@ class productC0ntroller extends Controller
         $product= product::find($id);
         $product->title=$request->title;
         $count=product::where('slug','LIKE', '%'.str($request->title)->slug() .'%')->count();
-                 if($count>0){
+       if($count>0){
             $count++;
             $slug=str($request->title)->slug() . '-' . $count;
       }else{
            $slug= str($request->title)->slug();
       }  
-        $product->slug=$slug;
+       $product->slug=$slug;
        $product->description=$request->description;
        $product->shipping_returns=$request->shipping_returns;
        $product->short_description=$request->short_description;
@@ -117,7 +117,7 @@ class productC0ntroller extends Controller
       
   }
 
-
+              
   function relatedproduct(Request $request){
       $tempProduct = [];
     if($request->term != ""){

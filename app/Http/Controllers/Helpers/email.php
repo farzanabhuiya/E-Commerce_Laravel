@@ -18,7 +18,7 @@ trait email{
           }else{
 
             $subject = 'Your have received an order';
-            $email =env('ADMIN_EMAI');
+            $email =env('ADMIN_EMAIL');
           }
 
 
@@ -28,7 +28,7 @@ trait email{
             'userType' =>$userType
         ];
 
-        Mail::to($email)->send(new OrderEmail($mailData));
+        Mail::to($email)->send(new OrderEmail('mailData'));
         // dd($order);
       
     }

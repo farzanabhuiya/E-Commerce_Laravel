@@ -25,7 +25,11 @@
 							@method('post')
 							
 						<div class="card">
-							<div class="card-body">								
+							<div class="card-body">
+								@if (session('success'))
+								<div class="alert alert-success">{{session('success')}}</div>
+							@endif
+																
 								<div class="row">
                                     <div class="col-md-12">
 										<div class="mb-3">

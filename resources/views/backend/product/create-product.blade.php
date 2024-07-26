@@ -18,6 +18,9 @@
 				</section>
 				<!-- Main content -->
 				<section class="content">
+                    @if (session('success'))
+                    <div class="alert alert-success">{{session('success')}}</div>
+                @endif
 					<!-- Default box -->
 					<div class="container-fluid">
                         <form action="{{route('Product.story')}}" method="post" enctype="multipart/form-data">

@@ -16,9 +16,9 @@ class OrderEmail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($mailData)
+    public function __construct($name)
     {
-        $this->mailData = $mailData;
+        $this->mailData = $name;
     }
 
     /**
@@ -27,7 +27,7 @@ class OrderEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject:$this->mailData['subject'],
+            subject:"ordermail",
         );
     }
 

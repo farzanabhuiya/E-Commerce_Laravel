@@ -172,7 +172,9 @@
 							
 
 
-							@else
+							@endrole
+							
+							@role('writer')
 
 
 							<li class="nav-item">
@@ -190,6 +192,7 @@
 								</a>
 							</li>
 							@endrole
+						
 						</ul>
 					</nav>
 					<!-- /.sidebar-menu -->

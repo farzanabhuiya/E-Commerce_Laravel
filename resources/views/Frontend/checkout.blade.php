@@ -59,6 +59,7 @@
                                          @empty
                                              
                                          @endforelse 
+                                         <option value="rest">Rest the world</option>
                                  
                                     </select>
                                 </div>            

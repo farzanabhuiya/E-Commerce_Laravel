@@ -16,6 +16,7 @@ use App\Http\Controllers\Frontend\AccountController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Frontend\ShopController;
+use App\Http\Controllers\Frontend\WishlistController;
 use Mockery\Matcher\Subset;
 
 // Route::get('/', function () {
@@ -49,6 +50,7 @@ Route::post('/remove',[CartController::class,'removeCoupon'])->name('front.remov
 
 
 
+
 Auth::routes();
                    ////dashboard 
 Route::group(['middleware' => ['role:admin|writer']], function (){
@@ -62,6 +64,7 @@ Route::put('/profile-update',[ProfileController::class,'profileUpdate'])->name('
  Route::get('/account',[ProfileController::class,'profileAccount'])->name('account.profile');
  Route::get('/account-order',[AccountController::class,'Order'])->name('account.order');
  Route::get('/account-orderDetail/{orderID}',[AccountController::class,'OrderDetail'])->name('account.orderDetail');
+ Route::get('/account-wishlist',[AccountController::class,'wishlist'])->name('account.wishlist');
 
 
 
@@ -133,3 +136,9 @@ Route::post('/shipping',[ShippingController::class,'story'])->name('shipping.sto
 Route::get('/DiscountCupon',[DiscountCuponController::class,'index'])->name('discountCupon.index');
 Route::get('/DiscountCupon-create',[DiscountCuponController::class,'create'])->name('discountCupon.create');
 Route::post('/DiscountCupon-story',[DiscountCuponController::class,'story'])->name('discountCupon.story');
+
+
+           //frontend Wishlist
+// Route::get('/wishlist',[WishlistController::class,'addwishlist'])->name('front.wishlist');
+Route::post('/wishlist',[WishlistController::class,'addwishlist'])->name('front.addwishlist');
+Route::post('/remove-product-from-wishlisht',[WishlistController::class,'removeWishlist'])->name('wishlisht.delete');

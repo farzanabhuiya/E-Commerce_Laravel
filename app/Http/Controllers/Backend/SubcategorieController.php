@@ -32,11 +32,10 @@ public function create(Request $request){
     $Subcategory= new Subcategorie();
     $Subcategory->category_id=$request->category_id;
     $Subcategory->name=$request->name;
-
-          $count=Subcategorie::where('slug','LIKE', '%'.str($request->name)->slug() .'%')->count();
-                   if($count>0){
-              $count++;
-              $slug=str($request->name)->slug() . '-' . $count;
+    $count=Subcategorie::where('slug','LIKE', '%'.str($request->name)->slug() .'%')->count();
+      if($count>0){
+      $count++;
+      $slug=str($request->name)->slug() . '-' . $count;
         }else{
              $slug= str($request->name)->slug();
         }  
@@ -46,13 +45,13 @@ public function create(Request $request){
 
    // $Subcategory->slug=$this->generateslug($request->name,Subcategory::class);
     $Subcategory->save();
-    return back();
+    return back()->with('success','Category Update Successfully Created');;
 
 }
  
 public function story(){
 
-  $subcategories = Subcategorie::with('category')->latest()->paginate(3);
+  $subcategories = Subcategorie::with('category')->latest()->paginate(5);
   return view('backend.Subcategorie.List-subcategorie',compact('subcategories'));
 }
 
@@ -81,8 +80,9 @@ public function update(Request $request,$id){
       
       $Subcategory->slug=$slug;
       $Subcategory->save();
-       $subcategories = Subcategorie::where('category_id', $request->category_id)->latest()->paginate(3);
-      return view('backend.Subcategorie.List-subcategorie',compact('Subcategory','subcategories'));}
+       $subcategories = Subcategorie::where('category_id', $request->category_id)->latest()->paginate(5);
+      return view('backend.Subcategorie.List-subcategorie',compact('Subcategory','subcategories'))->with('success','Subcategories Update Successfully Created');;
+    }
 
 
 

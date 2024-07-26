@@ -28,6 +28,8 @@ class CategoryController extends Controller
     public function store(Request $request){  
 
          $fileName = time().'.'.$request->image->extension();  
+
+         
          $request->image->storeAS('category',$fileName,'public'); 
         $category =new Category();
         $category->name=$request->name;
@@ -36,7 +38,7 @@ class CategoryController extends Controller
          $category->showhome=$request->showhome;
          $category->status=$request->status;
         $category->save();
-        return view('backend.Category.create-category',compact('category'));
+        return view('backend.Category.create-category',compact('category'))->with('success','Category Successfully Created');
     }
 
     public function create(){

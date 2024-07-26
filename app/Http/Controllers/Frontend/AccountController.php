@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Order_item;
+use App\Models\Wishlist;
 
 class AccountController extends Controller
 {
@@ -33,4 +34,11 @@ class AccountController extends Controller
         $data['ordercounts'] = $ordercounts;
         return view('Frontend.Account.order_detail',$data);
     }
+    function wishlist(Request $request){
+        $categorie= Category::orderBy('name','ASC')->with('Subcategorie')->where('showhome','Yes')->get();
+
+        $wishlists = Wishlist::where('user_id',auth()->user()->id)->with('product')->get();
+        return view('Frontend.Account.wishlist',compact('wishlists','categorie'));
+    }
+ 
 }

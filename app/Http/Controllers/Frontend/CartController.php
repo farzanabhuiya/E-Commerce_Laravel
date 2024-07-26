@@ -86,8 +86,11 @@ class CartController extends Controller
                        
    public function addtoCart (Request $request){
   
-   
-    $id = $request->id;
+    if(Auth::check()==false){
+      return redirect()->route('login');
+
+  }
+   $id = $request->id;
     $product = product::find($id);
  
      if($product == null){
@@ -107,8 +110,7 @@ class CartController extends Controller
             $productAlreadyExist =true;       
         }
     }
-
-
+    
     if($productAlreadyExist == false){
 
         // Cart::add($product->id, $product->title,$product->price);
@@ -117,8 +119,7 @@ class CartController extends Controller
         // $status = false;
         $message = 'Product add in Card';
 
-    }
-    else{
+    }else{
         $status = false;
         // $status = true;
         $message = 'Product all ready exist';
@@ -203,11 +204,18 @@ return response()->json([
                }
 
 
-               ///calculate shipping here
+              ///calculate shipping here
               if( $CustomerAddersse  != null){
                 $usercountry= $CustomerAddersse->countrie_id;
                 $shippingInfo = Shipping::where('countrie_id',$usercountry)->first();
-              
+              //  dd($usercountry);
+                 
+              // start
+              //jodi shipping ay moddha country amount select kora nah thake tojon rest niba and ai logic hobe
+              if( $shippingInfo == null){
+                $shippingInfo = Shipping::where('countrie_id','rest')->first();
+              }
+              // end
                 
                 $totalqty =0;
                 $totalshipping=0;
@@ -334,24 +342,19 @@ return view('Frontend.checkout',$data);
             $orderitem->save();
             }
             session()->forget('code');
+            Cart::destroy();
             //send order email
-            $this->orderEmail($order->id,'customer');
+            // $this->orderEmail($order->id,'customer');
 
-
-
-
-
-            // $order =Order::where('order_id',$order->id)->with('items')->first();
-
-            //         $mailData = [
-            //             'order_id' =>$order->id,
-            //            'order' =>$order,
-            //         ];
-            
-            //         Mail::to($request->email)->send(new OrderEmail($mailData));
-            //         //  dd($order);
          }
-      
+//          $productDetailsMail =[
+//           'order_id'=>$order->id ,
+//           'orederDetails'=>'ordersuccss',
+
+//  ];
+
+// //  dd(is_array($productDetailsMail));
+//  Mail::to($request->email)->send(new OrderEmail($productDetailsMail));
 
 
         // return back();           

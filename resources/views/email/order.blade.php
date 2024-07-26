@@ -8,13 +8,13 @@
 </head>
 <body style="font-family:Arial,Helvetica,sana-serif; font-size:16px;">
     
-    @if ($mailData['userType'] == 'customer')
+    {{-- @if ($mailData['userType'] == 'customer')
     <h1>Thanks for your order!!</h1>
     <h2>Your order Id Is:#{{$mailData['order']->id}}</h2>
     @else
     <h1>Your have received an order::</h1>
     <h2>Order id:#{{$mailData['order']->id}}</h2>
-    @endif
+    @endif --}}
     
     <h2>Product</h2>
 
@@ -29,17 +29,17 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($mailData['order']->items as $item)
+            {{-- @foreach ($mailData['order']->items as $item)
             <tr>
                 <td>{{$item->name}}</td>
                 <td>${{number_format($item->price,2)}}</td>                                        
                 <td>{{$item->qty}}</td>
                 <td>${{number_format($item->total,2)}}</td>
             </tr>
-            @endforeach
+            @endforeach --}}
      
          
-            <tr>
+            {{-- <tr>
                 <th colspan="3" class="text-right">Subtotal:</th>
                 <td>${{number_format($mailData['order']->subtotal,2)}}</td>
             </tr>
@@ -55,7 +55,7 @@
             <tr>
                 <th colspan="3" class="text-right">Grand Total:</th>
                 <td>${{number_format($mailData['order']->grand_total,2)}}</td>
-            </tr>
+            </tr> --}}
         </tbody>
     </table>
 </body>

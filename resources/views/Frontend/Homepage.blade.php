@@ -147,7 +147,10 @@
                         <div class="product-image position-relative">
                             <a href="{{route('front.product',$product->slug)}}" class="product-img"><img style="width: 200px;height:300px object-fit:cover;obect-position:center;" 
                                 class="card-img-top" src="{{asset('storage/product/'.$product->image)}}" alt=""></a>
-                            <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
+                                <a onclick="addwishlist({{$product->id}})" class="whishlist"  href="javascript:void(0)">
+                                    <i class="far fa-heart"></i></a>  
+                                    
+                                    
 
                             <div class="product-action">
                                 <a class="btn btn-dark" href="javascript:void(0)" onclick="addtoCart({{ $product->id}})" >
@@ -197,7 +200,8 @@
                         <div class="product-image position-relative">
                             {{-- <a href="" class="product-img"><img class="card-img-top" src="{{asset('storage/product'.$product->image)}}" alt=""></a> --}}
                             <a href="{{route('front.product',$product->slug)}}" class="product-img"><img  class="card-img-top" src="{{asset('storage/product/'.$product->image)}}" alt=""></a>
-                            <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
+                            <a onclick="addwishlist({{$product->id}})" class="whishlist"  href="javascript:void(0)">
+                                <i class="far fa-heart"></i></a>                            
 
                             <div class="product-action">
                                 <a class="btn btn-dark" href="javascript: void(0)" onclick="addtoCart({{$product->id}})" >
@@ -228,12 +232,9 @@
 
 
 
+     
 
-    {{-- <script src="{{asset('frontend/js/jquery-3.6.0.min.js')}}"></script> --}}
-{{-- 
-       @push('customJs')       
-
-       <script type="text/javascript">
+       {{-- <script type="text/javascript">
         function addtoCart(id){
             
             $.ajax({
@@ -253,8 +254,8 @@
             });
 
         }      
-</script>
-       @endpush --}}
+</script> --}}
+     
      
 
 
@@ -281,9 +282,35 @@
                }
 
             } 
-        })
+        });
     }
 
+</script>
+
+
+        {{-- /// wishlist --}}
+
+<script type="text/javascript">
+    function addwishlist(id) {
+        $.ajax({
+            url: "{{route('front.addwishlist')}}",
+             type: 'POST',
+              data: {id:id,},
+            dataType:'json',
+            success:function(response){
+
+               if( response.status == true){
+                $('#wishlistModal .modal-body').html(response.message);
+                $('#wishlistModal').modal('show');
+
+               }else{
+                alert(response.message)
+                window.location.href="{{route('login')}}";
+               }
+
+            } 
+        });
+    }
 </script>
 
 @endpush

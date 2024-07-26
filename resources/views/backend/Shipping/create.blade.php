@@ -25,6 +25,9 @@
                     
                 
                 <div class="card">
+                    @if (session('success'))
+                    <div class="alert alert-success">{{session('success')}}</div>
+                    @endif
                     <div class="card-body">								
                         <div class="row">
                             <div class="col-md-6">

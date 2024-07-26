@@ -41,16 +41,9 @@ class DiscountCuponController extends Controller
         $cupons->starts_at=$request->starts_at;
         $cupons->expires_at=$request->expires_at;
         $cupons->save();
-        return back();
+        // $notification= 'Cupon Successfully Created';
 
-        // $notification = [
-        //     'message' => 'Cupon Successfully Created',
-        //     'alert-type' => 'success',
-        // ];
-        // return redirect()
-        // // ->back()
-        //  ->route('discountCupon')
-        //     ->with($notification);
+        return back()->with('success','Cupon Successfully Created');
     }
 
     function create(){

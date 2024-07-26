@@ -15,12 +15,16 @@ class ShopController extends Controller
     $categorySeleted='';
     $subcategorieSeleted='';
     $brandsArray =[];
+   
 
    $categorie= Category::orderBy('name','ASC')->with('Subcategorie')->where('showhome','Yes')->get();
     $brands= Brand::orderBy('name','ASC')->where('status',1)->get();
     $products=product::orderBy('id','DESC')->where('status',1)->get();
     // $products = product::where('status',1);
 
+
+  
+    
 
      //apply filters here
      if(!empty($categoryslug)){
@@ -58,6 +62,24 @@ class ShopController extends Controller
 
     }
 
+
+
+
+
+          //search 
+          // if(!empty($request->get('search'))){
+          //   $products = $products->where('title','like','%' .$request->get('search'). '%');
+          //   // dd($product);
+          // }
+
+          if(!empty($request->get('search'))){
+            $products = product::where('title','like','%' .$request->get('search'). '%')->get();
+            // dd($product);
+          }
+
+
+
+
     //  $products = $products->orderBy('id','DESC');
     //  $products = $products->get();
 
@@ -80,6 +102,7 @@ class ShopController extends Controller
      $data['categorie']=$categorie;
      $data['brands']=$brands;
      $data['products']= $products;
+    
      $data['categorySeleted']=$categorySeleted;
      $data['subcategorieSeleted']=$subcategorieSeleted;
      $data['brandsArray']=$brandsArray;

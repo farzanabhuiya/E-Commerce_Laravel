@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\product;
 use App\Models\Category;
+use App\Models\Wishlist;
 use App\Models\Subcategorie;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\product;
 
 class HomePageController extends Controller
 {
@@ -20,4 +21,7 @@ class HomePageController extends Controller
    $latestproducts=product::orderBy('id','DESC')->where('status',1)->latest()->take(8)->get();
     return view('Frontend.Homepage',compact('categorie','products','latestproducts'));
   }
+
+
+
 }
