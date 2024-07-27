@@ -62,10 +62,6 @@ class ShopController extends Controller
 
     }
 
-
-
-
-
           //search 
           // if(!empty($request->get('search'))){
           //   $products = $products->where('title','like','%' .$request->get('search'). '%');

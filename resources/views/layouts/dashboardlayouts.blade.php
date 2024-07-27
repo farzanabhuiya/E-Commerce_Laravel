@@ -155,7 +155,7 @@
 							</li>
 							
 							<li class="nav-item">
-								<a href="users.html" class="nav-link">
+								<a href="{{route('User.index')}}" class="nav-link">
 									<i class="nav-icon  fas fa-users"></i>
 									<p>Users</p>
 								</a>
