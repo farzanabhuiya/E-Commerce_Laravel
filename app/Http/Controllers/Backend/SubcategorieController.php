@@ -56,17 +56,17 @@ public function story(){
 }
 
 public function edit($id){
-
-  $subcategory= Subcategorie::find($id);
+  $categories = Category::with('Subcategorie')->select('id','name')->latest()->get();
+  $subcategorie= Subcategorie::find($id);
  
-return view('backend.Subcategorie.edit-subcategorie',compact('subcategory'));
+return view('backend.Subcategorie.edit-subcategorie',compact('subcategorie','categories'));
 }
 
 
 public function update(Request $request,$id){
 
 
-  $Subcategory= new Subcategorie();
+  $Subcategory=  Subcategorie::find($id);
   $Subcategory->category_id=$request->category_id;
   $Subcategory->name=$request->name;
 
@@ -81,7 +81,7 @@ public function update(Request $request,$id){
       $Subcategory->slug=$slug;
       $Subcategory->save();
        $subcategories = Subcategorie::where('category_id', $request->category_id)->latest()->paginate(5);
-      return view('backend.Subcategorie.List-subcategorie',compact('Subcategory','subcategories'))->with('success','Subcategories Update Successfully Created');;
+      return view('backend.Subcategorie.List-subcategorie',compact('Subcategory','subcategories'))->with('success',' Update Successfully Created');
     }
 
 

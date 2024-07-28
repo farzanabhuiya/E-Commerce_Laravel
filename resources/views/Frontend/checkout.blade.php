@@ -19,6 +19,8 @@
 <div class="alert alert-success">{{Session('success')}}</div>
 @endif --}}
 <section class="section-9 pt-4">
+
+
     <div class="container">
         <div class="row">
             <div class="col-md-8">
@@ -35,17 +37,26 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <input type="text" name="first_name" id="first_name" class="form-control" value="{{(!empty($CustomerAddersse)) ? $CustomerAddersse->first_name : ""}}" placeholder="First Name">
+                                    @error('first_name')
+                                    <span class="text-danger">{{$message }}</span>
+                                   @enderror
                                 </div>            
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name" value="{{(!empty($CustomerAddersse)) ? $CustomerAddersse->last_name : ""}}">
+                                    @error('last_name')
+                                    <span class="text-danger">{{$message }}</span>
+                                   @enderror
                                 </div>            
                             </div>
                             
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <input type="text" name="email" id="email" class="form-control" placeholder="Email" value="{{(!empty($CustomerAddersse)) ? $CustomerAddersse->email : ""}}">
+                                    @error('email')
+                                    <span class="text-danger">{{$message }}</span>
+                                   @enderror
                                 </div>            
                             </div>
 
@@ -98,6 +109,9 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Mobile No.">
+                                    @error('mobile')
+                                    <span class="text-danger">{{$message }}</span>
+                                   @enderror
                                 </div>            
                             </div>
                             

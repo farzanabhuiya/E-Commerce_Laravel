@@ -35,7 +35,10 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="name">code</label>
-                                    <input type="text" name="code" id="code" class="form-control" placeholder="code">	
+                                    <input type="text" name="code" id="code" class="form-control" placeholder="code">
+                                    @error('code')
+                                         <span class="text-danger">{{$message }}</span>
+                                        @enderror	
                                 </div>
                             </div>
 
@@ -77,7 +80,10 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="name">Discount_amount</label>
-                                    <input type="text" name="discount_amount" id="discount_amount" class="form-control" placeholder="discount_amount">	
+                                    <input type="text" name="discount_amount" id="discount_amount" class="form-control" placeholder="discount_amount">
+                                    @error('discount_amount')
+                                    <span class="text-danger">{{$message }}</span>
+                                   @enderror	
                                 </div>
                             </div>
 
@@ -103,14 +109,20 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="name">Starts_at</label>
-                                    <input autocomplete="off" type="text" name="starts_at" id="starts_at" class="form-control" placeholder="Starts_at">	
+                                    <input autocomplete="off" type="text" name="starts_at" id="starts_at" class="form-control" placeholder="Starts_at">
+                                    @error('starts_at')
+                                    <span class="text-danger">{{$message }}</span>
+                                   @enderror	
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="name">Expires_at</label>
-                                    <input autocomplete="off" type="text" name="expires_at" id="expires_at" class="form-control" placeholder="Expires_at">	
+                                    <input autocomplete="off" type="text" name="expires_at" id="expires_at" class="form-control" placeholder="Expires_at">
+                                    @error('expires_at')
+                                    <span class="text-danger">{{$message }}</span>
+                                   @enderror	
                                 </div>
                             </div>
 

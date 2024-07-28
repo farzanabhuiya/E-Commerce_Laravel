@@ -4,6 +4,7 @@
 
 				<section class="content-header">					
 					<div class="container-fluid my-2">
+					
 						<div class="row mb-2">
 							<div class="col-sm-6">
 								<h1>Sub Category</h1>
@@ -19,6 +20,9 @@
 				<section class="content">
 					<!-- Default box -->
 					<div class="container-fluid">
+						@if (session('success'))
+						<div class="alert alert-success">{{session('success')}}</div>
+						@endif
 						<div class="card">
 							<div class="card-header">
 

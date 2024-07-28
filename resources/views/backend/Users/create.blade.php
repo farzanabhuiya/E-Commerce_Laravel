@@ -36,20 +36,29 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="name">Name</label>
-                                    <input type="text" name="name" id="name" class="form-control" placeholder="Name">	
+                                    <input type="text" name="name" id="name" class="form-control" placeholder="Name">
+                                 @error('name')
+                                    <span class="text-danger">{{$message }}</span>
+                                       @enderror	
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="slug">Email</label>
-                                    <input type="text" name="email" id="email"  class="form-control" placeholder="Email">	
+                                    <input type="text" name="email" id="email"  class="form-control" placeholder="Email">
+                                    @error('email')
+                                          <span class="text-danger">{{$message }}</span>
+                                         @enderror	
                                 </div>
                             </div>	
                
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="slug">PassWord</label>
-                                    <input type="text" name="password" id="password"  class="form-control" placeholder="Password">	
+                                    <input type="text" name="password" id="password"  class="form-control" placeholder="Password">
+                                    @error('password')
+                                     <span class="text-danger">{{$message }}</span>
+                                      @enderror	
                                 </div>
                             </div>	
 

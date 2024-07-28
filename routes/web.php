@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DiscountCuponController;
 use App\Http\Controllers\backend\OrderController;
+use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\productC0ntroller;
 use App\Http\Controllers\Backend\ShippingController;
 use App\Http\Controllers\Backend\TempImageController;
@@ -29,6 +30,8 @@ use Mockery\Matcher\Subset;
 
   //(/)dawar koran holo jokon project run hobe ba hobar sathe sathe jay page tah dakhta cai oi page url moddha / tah use hobe
 Route::get('/',[HomePageController::class,'index'])->name('front.homepage');
+Route::get('/page/{slug}',[HomePageController::class,'page'])->name('front.page');
+ Route::post('/sendContact-email',[HomePageController::class,'contactEmail'])->name('front.contactEmail');
 
 
 
@@ -151,3 +154,15 @@ Route::get('/user-create',[UserController::class,'create'])->name('User.create')
  Route::get('/user-edit/{id}',[UserController::class,'edit'])->name('User.edit');
  Route::put('/user-update/{id}',[UserController::class,'update'])->name('User.update');
  Route::delete('/user-delete/{id}',[UserController::class,'deleted'])->name('User.delete');
+
+
+
+             //  page route
+
+
+Route::get('/Page',[PageController::class,'index'])->name('Page.index');
+Route::get('/Page-create',[PageController::class,'create'])->name('Page.create');
+Route::post('Page-story',[PageController::class,'story'])->name('Page.story');
+Route::get('/Page-edit/{id}',[PageController::class,'edit'])->name('Page.edit');
+Route::put('/Page-update/{id}',[PageController::class,'update'])->name('Page.update');
+Route::delete('/Page-delete/{id}',[PageController::class,'deleted'])->name('Page.delete');

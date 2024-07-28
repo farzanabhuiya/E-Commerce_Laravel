@@ -32,7 +32,7 @@
 								<div class="row">
                                     <div class="col-md-12">
 										<div class="mb-3">
-											{{-- <label for="name">Category</label>
+											<label for="name">Category</label>
 											<select name="category_id" id="category" class="form-control">
 												@forelse ($categories as $category )
                                                 <option  value="{{  $category->id }}">{{ $category->name }}</option>
@@ -40,7 +40,7 @@
 												@empty
 										        <option disabled selected>No catrgory found</option>
 										      @endforelse
-                                            </select> --}}
+                                            </select>
 										</div>
 									</div>
 
@@ -50,12 +50,12 @@
 											<input value="{{$subcategorie->name}}" type="text" name="name" id="name" class="form-control" placeholder="Name">	
 										</div>
 									</div>
-									{{-- <div class="col-md-6">
+									<div class="col-md-6">
 										<div class="mb-3">
 											<label for="email">Slug</label>
-											<input type="text" name="slug" id="slug" class="form-control" placeholder="Slug">	
+											<input type="text" value="{{$subcategorie->slug}}" name="slug" id="slug" class="form-control" placeholder="Slug">	
 										</div>
-									</div>									 --}}
+									</div>									
 								</div>
 							</div>							
 						</div>

@@ -22,14 +22,14 @@ class UserController extends Controller
   
     public function story(Request $request){
         //dd($request->all());
-        // $request->validate([
+        $request->validate([
 
-        //     'name'=>'required|max:12',
-        //     'email' =>'required|email|unique:users',
-        //     'profile_img' =>'nullable|mimes:jpg,png,jpeg,svg',
-        //      'mobile'=>'required|max:11',
-        //     'password'=>'required|max:8',
-        //    ]);
+            'name'=>'required|max:12',
+            'email' =>'required|email|unique:users',
+            'profile_img' =>'nullable|mimes:jpg,png,jpeg,svg',
+             'mobile'=>'required|max:11',
+            'password'=>'required|max:8',
+           ]);
    
 
         // $users = User::find(auth()->user()->id);

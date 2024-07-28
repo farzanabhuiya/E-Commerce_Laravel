@@ -246,6 +246,14 @@ return view('Frontend.checkout',$data);
 
 
    function processCheckout(Request $request){
+
+
+    $request->validate([
+      'first_name' =>"required",
+      'last_name' =>"required",
+      'email' =>"required|email",
+      'mobile' =>"required|min:11"
+      ]);
       
      // step 1 save user addres
           $address = new CustomerAddersse();
@@ -357,8 +365,8 @@ return view('Frontend.checkout',$data);
 //  Mail::to($request->email)->send(new OrderEmail($productDetailsMail));
 
 
-        // return back();           
-        return view('Frontend.checkout');
+         return back();           
+        // return view('Frontend.checkout');
       
    }
 
@@ -492,7 +500,7 @@ return view('Frontend.checkout',$data);
                   ]);
              }
           }
-
+//// session put holo seeion moddha kicu rakha/
        session()->put('code',$code);
        return $this->getorderSummery($request);
 

@@ -19,6 +19,12 @@ class DiscountCuponController extends Controller
 
  
     function story(Request $request){
+        $request->validate([
+            'code' =>"required",
+            'discount_amount' =>"required",
+            'starts_at' =>"required",
+            'expires_at' =>"required"
+            ]);
 
         if(!empty($request->starts_at)){
             $start_time = Carbon::now()->format('Y/m/d H:i',$request->starts_at);
